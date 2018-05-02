@@ -436,7 +436,11 @@ this.complete = function(string){
                     
                     if((response.status)=="200"){
                         if(print){
-                            printJS({ printable: 'receipt-block', type: 'html'});
+                          document.addEventListener('deviceready', function () {
+                               var page = document.getElementById('receipt');
+                               cordova.plugins.printer.print(page, 'POS Receipt');
+
+                           }, false);
                         }
 
                         ModalService.Close('make-order-receipt');
