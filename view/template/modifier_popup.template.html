@@ -1,0 +1,38 @@
+<modal id="modifier-popup" ng-init="pCtrl.customModifier = ''">
+    <div class="modal">
+        <div class="modal-body">
+        <img class="close-btn" style="margin-top:0px" src="web/img/close.svg" ng-click="pCtrl.closeModifierPopUp()">
+        <div class="modal-header">Add Modifiers</div>
+        <div class="modal-content">
+          <div>
+            <ul class="modifier-items-popup-container" >
+                     <li ng-repeat="added_modifier in pCtrl.cartItems[pCtrl.selectedCartItemIndex].modifier_types" class="modifier-item"><span>{{added_modifier.modifier_name}}</span> <span ng-if="added_modifier.modifier_name != ''"> - </span><span>{{added_modifier.modifier_option}} </span><span ng-click="pCtrl.removeModifierOption($index);" style="padding-right:10px"  uk-icon="icon: close; ratio: 1"></span></li>
+              </ul>
+          </div>
+          <hr ng-if="pCtrl.cartItems[pCtrl.selectedCartItemIndex].modifier_types.length > 0" style="width: 460px" />
+           <div class="modifier-grid-container" ng-repeat="modifier in pCtrl.selectedCartItemModifiers">
+            <div class="modifier-grid">
+            <div>{{modifier.modifier_name}}</div>
+
+            <div>
+                 <ul ng-init="options = pCtrl.parJsonArray(modifier.modifier_options)">
+                     <li ng-repeat="option in options" ng-click="pCtrl.addModifier(modifier,option, $parent.$index)"><span>{{option.option}}</span><span style="    padding-left: 10px;font-weight:bold">+GH₵ {{option.priceAlt | number:2}}</span></li>
+                 </ul>
+            </div>
+         </div>
+         </div>
+        </div>
+        <form class="modal-content" ng-submit="pCtrl.addCustomModifier(pCtrl.customModifier)">
+            <h1  class="modal-content-header">Add custom modifier</h1>
+            <div class="uk-margin">
+                <input class="uk-input" ng-model="pCtrl.customModifier" type="text" placeholder="Enter custom modifier">
+            </div>
+<!--             <div class="uk-margin">
+                <input class="uk-input" type="text" placeholder="Input">
+            </div> -->
+            <div class="add-custom-modifier-container"><button type="submit" class="add-custom-modifier">+ Add custom modifier</button></div>
+        </form>
+    </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>

@@ -1,0 +1,40 @@
+<div ng-controller="MenuController as mCtrl" ng-init="mCtrl.curtab = 'pos'">
+<div ng-controller="PosController as pCtrl" ng-show="mCtrl.curtab  == 'pos'">
+  <div ng-include = "'view/template/receipt.html'"></div>
+<div class="store-name-container">{{pCtrl.selectedStore.name}}</div>
+<div class="grid-container" >
+   <div class="product">
+      <div ng-include = "'view/template/product_section.template.html'"></div>
+    </div>
+    <div class="orderdetails">
+   <div ng-include = "'view/template/order_details.template.html'"></div>
+   </div>
+</div>
+<div ng-include = "'view/template/make_order_receipt.template.html'"></div>
+<div ng-include = "'view/template/customer_form.template.html'"></div>
+<div ng-include = "'view/template/modifier_popup.template.html'"></div>
+
+</div>
+<div ng-include = "'view/layout/orders.html'"  ng-show="mCtrl.curtab  == 'orders'"></div>
+<div ng-include = "'view/layout/riders.html'" ng-show="mCtrl.curtab  == 'riders'"></div>
+<div ng-include = "'view/layout/customers.html'" ng-show="mCtrl.curtab  == 'customers'"></div>
+
+<div class="menu-bar">
+<div class="bottom-menu">
+   <ul class="foot-menu-items">
+      <li><a id='pos' class=" active" ng-click="mCtrl.switchTab('pos','orders')">POS</a>
+      </li>
+       <li><a id='orders'  ng-click="mCtrl.switchTab('orders','pos')">Orders</a>
+     <!--  <li><a ng-click="mCtrl.redirect('/orders.html')">Orders</a> -->
+      </li>
+   </ul>
+</div>
+
+<div ng-include = "'view/template/close_register.template.html'"></div>
+<div ng-include = "'view/template/side_menu.template.html'"></div>
+<div class="foot-hamburger-container">
+   <span ng-click="mCtrl.openMenu()" uk-icon="icon: menu; ratio: 1.5" class="uk-icon">
+   </span>
+</div>
+</div>
+</div>

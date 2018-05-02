@@ -1,0 +1,66 @@
+<modal id="delivery-order-receipt">
+    <div class="modal">
+        <div class="modal-body" style="width:auto;">
+            
+        <img class="close-btn" src="web/img/close.svg" ng-click="ctrl.closeDeliveryReceipt()">
+         <div class="receipt-container" id="receipt-container">
+             <div class="modal-header">Receipt</div>
+             <div class="receipt-block" id="delivery-receipt-block">
+                 <h1 class="receipt-header">Sale.no:{{ctrl.selectedDelivery.order_id}}</h1>
+                 <div class="receipt-order-info">
+                     <p>Date:  {{ctrl.selectedDelivery.date}}</p>
+                     <p>OrderType: delivery</p>
+                     <p>Customer:  {{ctrl.selectedDelivery.name}} - {{ctrl.selectedDelivery.phone}} - {{ctrl.selectedDelivery.delivery_location}}</p>
+                     <p>Rider:  {{ctrl.selectedDelivery.firstname}} {{ctrl.selectedDelivery.lastname}} </p>
+                     <p>Departure time:  {{ctrl.selectedDelivery.departure_time}}</p>
+                 </div>
+                 <table class="uk-table uk-table-divider receipt-cart-table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in ctrl.cartItems">
+            <td>{{item.name}}</td>
+            <td style="text-align:right">{{item.qty}}</td>
+            <td>GH₵ {{item.cost * item.qty | number:2}}</td>
+        </tr>
+    </tbody>
+</table>
+             <div class="order-charge-summary">
+            <div class="order-charge-summary-entry"><span class="receipt-title">Subtotal</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ {{ctrl.total()}}</span></div>
+
+            <div class="order-charge-summary-entry"><span class="receipt-title">Delivery charge</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ {{ctrl.selectedDelivery.amount_charge | number:2}}</span></div>
+
+          <div class="order-charge-summary-entry"><span class="receipt-title">Discount</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ 0.00</span></div>
+
+          <div class="order-charge-summary-entry"><span class="receipt-title">Tax</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ 0.00</span></div>
+
+           <hr style="width:calc(100% - 20px); margin: 10px 0px;" />
+
+      <div  class="order-charge-summary-entry"><span style="width:85px" class="receipt-title">Amount paid</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;width:90px" /></span><span style="font-weight: bold" class="receipt-summary-value">GH₵ {{ctrl.selectedDelivery.amount_paid | number:2}}</span></div>
+
+
+
+      <div  class="order-charge-summary-entry"><span class="receipt-title">Change</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span style="font-weight: bold" class="receipt-summary-value">GH₵ {{ctrl.change(ctrl.total(),ctrl.selectedDelivery.amount_paid) | number:2}}</span></div>
+
+        </div>
+             </div>
+
+
+        </div>
+         <div  class="modal-button-container" >
+              <button class="cancel-button" ng-click="ctrl.closeDeliveryReceipt()" onclick="printJS({ printable: 'receipt', type: 'html'})"><span  uk-icon="icon:  album; ratio: 1"></span>Print</button>
+
+              <button class="cancel-button" ng-click="ctrl.closeDelivery(ctrl.selectedDelivery.id,ctrl.selectedDelivery.index);ctrl.closeDeliveryReceipt()" ><span  uk-icon="icon:  album; ratio: 1"></span>Checkout</button>
+
+              <button class="cancel-button" ng-click="ctrl.closeDelivery(ctrl.selectedDelivery.id, ctrl.selectedDelivery.index);ctrl.closeDeliveryReceipt()" onclick="printJS({ printable: 'delivery-receipt-block', type: 'html'})"><span  uk-icon="icon:  album; ratio: 1"></span>Print & Checkout</button>
+        </div>
+
+    </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>

@@ -1,0 +1,30 @@
+
+<nav class="nav" id="side-bar-nav">
+  <div style="font-size:13px;color:white">Logged in as</div>
+  <div style="color:white;font-size:16px;margin-bottom:20px"><span>{{mCtrl.userinfo.first_name}}</span><span> {{mCtrl.userinfo.last_name}}</span>
+</div>
+
+</div>
+
+	<ul>
+
+    <li ng-click="mCtrl.openCloseRegister()"><a>Close Register</a></li>
+
+    <li ng-click="mCtrl.redirect('/')"><a>Logout</a></li>
+
+  </ul>
+
+  <ul>
+    <li ng-click="mCtrl.redirect('/stores')"><a>Stores</a></li>
+    
+    <li ng-click="mCtrl.switchTab('riders');mCtrl.openMenu()"><a>Riders</a></li>
+
+    <li ng-click="mCtrl.switchTab('customers');mCtrl.openMenu()" ><a>Customers</a></li>
+
+<!--     <li><a href="#"></a></li>
+
+    <li><a href="#">Contact</a></li> -->
+
+  </ul>
+
+</nav>

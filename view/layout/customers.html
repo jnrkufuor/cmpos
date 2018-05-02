@@ -1,0 +1,25 @@
+<div ng-controller="CustomerController as ctrl" >
+<div class="order-page-head-container" style="top:0">
+<div class="order-page-section-head">
+        <h1>Customers</h1>
+ </div>
+</div>
+<table class="uk-table uk-table-striped order-table" style="margin-top: 75px;padding-bottom:50px;">
+         <thead>  
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Location</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="customer in ctrl.customers">
+          <td>{{customer.name}}</td>
+          <td>{{customer.phone}}</td>
+          <td>{{customer.default_location}}</td>
+            <td>{{customer.email}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>

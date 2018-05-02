@@ -1,0 +1,32 @@
+<div ng-controller="RidersController as ctrl" >
+<div class="order-page-head-container" style="top:0">
+<div class="order-page-section-head">
+        <h1>Riders</h1>
+ </div>
+</div>
+<table class="uk-table uk-table-striped order-table" style="margin-top: 75px;padding-bottom: 40px;">
+         <thead>  
+          <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Phone</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="rider in ctrl.riders">
+          <td>{{rider.firstname}}</td>
+          <td>{{rider.lastname}}</td>
+          <td>{{rider.phone}}</td>
+            <td>{{rider.email}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+
+
+
+
+

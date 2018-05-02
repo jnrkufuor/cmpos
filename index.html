@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>POS</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/css/uikit.min.css">
+        <link rel="stylesheet" href="web/css/uikit.min.css" />
+        <link rel="stylesheet" href="web/css/angucomplete-alt.css"/>
+        <link rel="stylesheet" href="web/css/angular-datatables.min.css"/>
+        <link rel="stylesheet" href="web/css/datatables.css"/>
+        <link rel="stylesheet" href="web/css/pos.css" />
+         <!-- UIkit JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/js/uikit.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/js/uikit-icons.min.js"></script>
+        <script src="web/js/uikit.min.js"></script>
+        <script src="web/js/uikit-icons.min.js"></script>
+        
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="web/js/jquery.dataTables.min.js">
+        </script>
+        <script type="text/javascript" src="web/js/angular.min.js"></script>
+        <script type="text/javascript" src="web/js/angular-route.js"></script>
+        <script type="text/javascript" src="web/js/angular-datatables.min.js"></script>
+        <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.js" type="text/javascript"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script> 
+        <script type="text/javascript" src="web/js/app.js"></script>
+        <script type="text/javascript" src="web/js/print.min.js"></script>
+        <script type="text/javascript" src="web/js/moment.js"></script>
+        <script type="text/javascript" src="web/js/angucomplete-alt.js">
+        </script>
+        <script type="text/javascript" src="controllers/register.js"></script>
+        <script type="text/javascript" src="controllers/user.js"></script>
+        <script type="text/javascript" src="controllers/store.js"></script>
+        <script type="text/javascript" src="controllers/pos.js"></script>
+        <script type="text/javascript" src="controllers/menu.js"></script>
+        <script type="text/javascript" src="controllers/order.js"></script>
+        <script type="text/javascript" src="controllers/rider.js"></script>
+        <script type="text/javascript" src="controllers/customer.js"></script>
+        <script type="text/javascript" src="directives/modal.directive.js"></script>
+        <!--    Services  -->
+        <script type="text/javascript" src="services/modal.service.js"></script> 
+        <script type="text/javascript" src="services/navparam.service.js"></script> 
+        <script type="text/javascript" src="services/toast.service.js"></script> 
+        <script type="text/javascript" src="web/js/angular-route.min.js"></script>
+        <script src="services/cordova-plugin-printer-master/www/printer.js"></script>
+        <script src="cordova.js"></script> 
+    </head>
+    <body>
+        <div ng-app="pos-app"> 
+            <div id="snackbar">Some text some message..</div>
+            <div ng-view></div>
+        </div>
+    </body>
+</html>

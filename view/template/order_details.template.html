@@ -1,0 +1,108 @@
+
+   <div class="order-section-head">
+<!--       <div>
+         <button>
+            <span uk-icon="icon: plus; ratio: 0.9" class="uk-icon">
+            </span>
+            <span>New Tab</span>
+         </button>
+      </div> -->
+      <div style="text-align: center">Order details</div>
+   </div>
+   <div class="order-tab-container" style="display: none" >
+      <ul uk-tab="" class="no-margin scrollmenu uk-tab" >
+         <li class="order-tab uk-active">
+            <a href="#">1</a>
+            <span style="padding-left: 10px; color: red" uk-icon="icon: close; ratio: 0.9" class="uk-icon">
+            </span>
+         </li>
+         <li class="order-tab">
+            <a href="#">#002</a>
+            <span style="padding-left: 10px; color: red" uk-icon="icon: close; ratio: 0.9" class="uk-icon">
+            </span>
+         </li>
+         <li class="order-tab">
+            <a href="#">#003</a>
+            <span style="padding-left: 10px; color: red" uk-icon="icon: close; ratio: 0.9" class="uk-icon">
+            </span>
+         </li>
+      </ul>
+   </div>
+   <div class="order-tab-content">
+      <div class="customer-details-container">
+         <div class="edit-customer-outer-container">
+         <span class="edit-customer-container">
+             <img ng-if="pCtrl.selectedCustomer.name == null || pCtrl.selectedCustomer.name == ''" src="web/img/pen-edit-disabled.svg">
+               <img ng-if="pCtrl.selectedCustomer.name != null && pCtrl.selectedCustomer.name != ''" ng-click="pCtrl.openEditCustomer()" src="web/img/pen-edit.svg">
+            </span>
+            <div ng-include = "'view/template/edit_customer_details_modal.template.html'"></div>
+         </div>
+         <div class="customer-details">
+
+            <input type="text" placeholder="Enter customer name" name="customer" id="customer" ng-model="pCtrl.selectedCustomer.name" ng-keyup="pCtrl.complete(pCtrl.selectedCustomer.name)"/>  
+            <div class="other-customer-details"><span>{{pCtrl.selectedCustomer.phone}}</span><span><span ng-if="pCtrl.selectedCustomer.default_location.length > 0"> - </span>{{pCtrl.selectedCustomer.default_location}}</span>
+         </div>
+            <ul class="customer-search-dropdown" ng-model="pCtrl.hidethis" ng-hide="pCtrl.hidethis">  
+                  <li  ng-repeat="customerInfo in pCtrl.filterCustomers" ng-click="pCtrl.fillTextbox(customerInfo)">{{customerInfo.name}} <span style="float: right">{{customerInfo.phone}} </span></li>
+                  <li style="text-align: center;color: #65C0A6;" ng-click="pCtrl.openNewCustomer()"> + New Customer</li>   
+            </ul>  
+         </div>
+          <div class="uk-inline order-type-container">
+                <button class="uk-button uk-button-default order-type-button" type="button">{{pCtrl.selectedOrderType}}<span uk-icon="icon: triangle-down; ratio: 0.9" class="uk-icon">
+            </span></button>
+                <div class="order-type-dropdown" uk-dropdown="mode: click">
+                 <ul class="uk-nav uk-dropdown-nav">
+                     <li ng-click="pCtrl.setSelectedOrderType(1)"><a href="#">Walk in</a></li>
+                     <li ng-click="pCtrl.setSelectedOrderType(2)"><a href="#">Pick up</a></li>
+                     <li ng-click="pCtrl.setSelectedOrderType(3)"><a href="#">Delivery</a></li>
+                 </ul>
+         </div>
+         </div>
+      </div>
+      <div ng-if="pCtrl.selectedOrderType == 'delivery'" class="delivery-charge-input-container">
+         <div>Delivery Charge: </div><input ng-model="pCtrl.deliveryCharge" type="number" class="delivery-charge-input">
+      </div>
+      <div class="cart-headers">
+         <div>Name</div>
+         <div style="text-align:center">Quantity</div>
+         <div style="text-align:right">Price</div>
+         <div></div>
+      </div>
+      <div class="cart-container">
+         <div class="cart-item-container" ng-repeat="item in pCtrl.cartItems">
+            <div class="cart-item">
+               <div class="name-container">{{item.name}}</div>
+               <div class="qty-container">
+                  <div class="innerwrap"> <span>
+                     <button ng-click="item.qty = item.qty - 1; pCtrl.minusQty(item.qty, $index)">-</button>
+                     </span>
+                     <span>
+                     <input type="text" ng-model="item.qty">
+                     </span>
+                     <span>
+                     <button ng-click="item.qty = item.qty + 1">+</button>
+                     </span>
+                  </div>
+               </div>
+               <div class="price-container">GH₵ {{item.cost * item.qty  | number:2}}</div>
+               <div class="delete-container">
+                  <img src="web/img/error.svg" ng-click="pCtrl.removeItem($index, item.id)">
+               </div>
+            </div>
+            <ul class="modifiers">
+       <!--          <ul class="modifiers" ng-if="item.hasModifier == 1"> -->
+               <li ng-click="pCtrl.openModifiers(item,$index)">+ Modifiers :</li>
+               <li ng-repeat="option in item.modifier_types">{{option.modifier_option}}</li>
+            </ul>
+         </div>
+      </div>
+      <div class="checkout-button-container">
+         <div><span>Discount</span><span class="order_charges">GH₵ 0.00</span></div>
+         <div><span>Subtotal</span><span class="order_charges"> GH₵ {{pCtrl.subtotal | number:2}}</span></div>
+         <div><span>Tax</span><span class="order_charges">0.00</span></div>
+         <div class="total_charge_container"><span>Total</span><span class="order_charges total_charge">GH₵ {{pCtrl.total() | number:2}}</span></div>
+         <button class="checkout-button" ng-click="pCtrl.makeOrder()">Save Order
+         </button>
+      </div>
+   </div>
+</div>

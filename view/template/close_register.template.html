@@ -1,0 +1,29 @@
+<modal id="closeRegister">
+    <div class="modal" ng-controller="RegisterController as rCtrl">
+        <div class="modal-body">
+            <img class="close-btn" style="margin-top:0px" src="web/img/close.svg" ng-click="rCtrl.closeModal()">
+            
+        <div class="modal-header">Close register</div>
+        <div class="modal-content">
+
+
+
+        <h1 class="modal-content-header">Expected balance</h1>
+        <div  ><input  class="modal-text-input" type="text" placeholder="Enter Closing balance" type="number" ng-model="rCtrl.expectedCash"></div>
+
+        <h1 class="modal-content-header">Closing balance</h1>
+        <div ><input  class="modal-text-input" type="text" placeholder="Enter Closing balance" type="number" ng-model="rCtrl.closingBalance"></div>
+
+        <h1 class="modal-content-header">Notes</h1>
+        <textarea class="uk-textarea" ng-model="rCtrl.notes"></textarea>
+
+
+
+    </div>
+    <div  class="modal-button-container">
+            <button class="save-button" ng-click="rCtrl.closeRegister()"><span  uk-icon="icon: check; ratio: 1"></span> Close register</button>
+        </div>
+    </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>

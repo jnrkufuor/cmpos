@@ -1,0 +1,34 @@
+
+<div class="product-section-head">
+   <h1>Product Select</h1>
+</div>
+<div class="product-section-body">
+   <div class="product-tab-container">
+      <ul uk-tab="" class="no-margin scrollmenu uk-tab">
+         <li ng-click="pCtrl.showAllProducts()" class="uk-active"><a href="#">All</a>
+         </li>
+         <li ng-click="pCtrl.filterByFavorites()"><a href="#">Favorites</a>
+         </li>
+         <li ng-repeat="category in pCtrl.product_categories" ng-click="pCtrl.filterByCategories(category.product_category_id)"><a href="#">{{category.name}}</a>
+         </li>
+
+      </ul>
+   </div>
+   <div class="product-search-bar-container">
+      <form class="uk-search uk-search-default full-width ">
+         <span uk-search-icon="" class="uk-search-icon uk-icon">
+         </span>
+         <input ng-model="pCtrl.string_for_product_search" class="uk-search-input product-search-bar" type="search" placeholder="Search products..." ng-keyup="pCtrl.searchProducts(pCtrl.string_for_product_search)">
+      </form>
+   </div>
+   <div class="products-container-section">
+      <div class="products-container">
+         <div class="box widget product-card" ng-repeat = "productitem in pCtrl.products_output" ng-click='pCtrl.addItem(productitem.id)' >
+            <div class="product-image-holder"></div>
+            <span class="pricetag"><span>GH₵ </span>{{productitem.price | number:2}}</span>
+            <div class="product-name">{{productitem.name}}</div>
+            <div class="category-indicator" style=""></div>
+         </div>
+      </div>
+   </div>
+</div>
