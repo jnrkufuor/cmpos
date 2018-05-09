@@ -7,11 +7,12 @@
       <ul uk-tab="" class="no-margin scrollmenu uk-tab">
          <li ng-click="pCtrl.showAllProducts()" class="uk-active"><a href="#">All</a>
          </li>
-         <li ng-click="pCtrl.filterByFavorites()"><a href="#">Favorites</a>
+         <!-- <li ng-click="pCtrl.filterByFavorites()"><a href="#">Favorites</a>
+         </li> -->
+         <li ng-repeat="category in pCtrl.product_categories" ng-click="pCtrl.filterByCategories(category.product_category_id)"> 
+             <a ng-if="category.color_code.length <= 0" href="#">{{category.name}}</a>
+            <a ng-if="category.color_code.length > 0" style="color: {{category.color_code}};filter: brightness(0.75);" href="#">{{category.name}}</a>
          </li>
-         <li ng-repeat="category in pCtrl.product_categories" ng-click="pCtrl.filterByCategories(category.product_category_id)"><a href="#">{{category.name}}</a>
-         </li>
-
       </ul>
    </div>
    <div class="product-search-bar-container">
@@ -23,11 +24,11 @@
    </div>
    <div class="products-container-section">
       <div class="products-container">
-         <div class="box widget product-card" ng-repeat = "productitem in pCtrl.products_output" ng-click='pCtrl.addItem(productitem.id)' >
-            <div class="product-image-holder"></div>
+         <div class="box widget product-card"  ng-repeat = "productitem in pCtrl.products_output" ng-click='pCtrl.addItem(productitem.id)' >
+            <div class="product-image-holder" ></div>
             <span class="pricetag"><span>GH₵ </span>{{productitem.price | number:2}}</span>
             <div class="product-name">{{productitem.name}}</div>
-            <div class="category-indicator" style=""></div>
+            <div class="category-indicator" style="background: {{productitem.color_code}}"></div>
          </div>
       </div>
    </div>

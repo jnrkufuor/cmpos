@@ -1,0 +1,55 @@
+<div style="width:300px; font-family: 'Helvetica Neue', sans-serif;" class="receipt" id="pos_page_receipt">
+<h1 style="text-align: center;font-size: 18px;padding: 10px;border-bottom: 1px solid;margin-bottom: 10px;">Sale no.: {{pCtrl.savedOrder.id}}</h1>
+<div style="border-bottom: 1px solid;padding-bottom: 10px;">
+<p style="margin: 0px 20px;font-size: 12px;"><span>Date: </span><span>{{pCtrl.savedOrder.date.date}}</span></p>
+<p style="margin: 0px 20px;font-size: 12px;"><span>OrderType: </span><span>{{pCtrl.savedOrder.type_of_order}}</span></p>
+<p style="margin: 0px 20px;font-size: 12px;"><span>Customer: {{pCtrl.selectedCustomer.name}} - {{pCtrl.selectedCustomer.phone}} - {{pCtrl.selectedCustomer.default_location}}</p>
+</div>
+<table style="text-transform: none;font-size: 12px;margin: 0px 20px; width: 260px;">
+	<thead>
+		<tr>
+			<th style="text-align:left;padding-top:5px;padding-bottom:5px;font-size: 14px">Product</th>
+			<th style="text-align:center;padding-top:5px;padding-bottom:5px; font-size: 14px">Quantity</th>
+			<th style="text-align:center;padding-top:5px;padding-bottom:5px; font-size: 14px">Price</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="item in pCtrl.cartItems">
+			<td style="text-align:left;padding:2.5px 0px"><span>{{item.name}}.</span><span ng-repeat="modifier in item.modifier_types"> [ {{modifier.modifier_option}} ] </span></td>
+			<td style="text-align:center;padding:2.5px 0px">{{item.qty}}</td>
+			<td style="text-align:center;padding:2.5px 0px">GH₵ {{item.cost * item.qty | number:2}}</td>
+		</tr>
+	</tbody>
+</table>
+<hr style="border-top: 1px solid;">
+<table style="text-transform: none;font-size: 12px;margin: 0px 20px; width: 260px;">
+		<tr>
+			<td style="text-align:left;padding:2.5px 0px">Subtotal</td>
+			<td style="text-align:center;padding:2.5px 0px">............................</td>
+			<td style="text-align:right;padding:2.5px 0px">GH₵ {{pCtrl.subtotal}}</td>
+		</tr>
+		<tr ng-if="pCtrl.selectedOrderType == 'delivery'">
+			<td style="text-align:left;padding:2.5px 0px">Delivery charge</td>
+			<td style="text-align:center;padding:2.5px 0px">............................</td>
+			<td style="text-align:right;padding:2.5px 0px">{{pCtrl.deliveryCharge | number:2}}</td>
+		</tr>
+		<tr>
+			<td style="text-align:left;padding:2.5px 0px;font-weight: bold;font-size:14px">Total</td>
+			<td style="text-align:center;padding:2.5px 0px;font-weight: bold;">............................</td>
+			<td style="text-align:right;padding:2.5px 0px;font-weight: bold;font-size:14px">GH₵ {{pCtrl.total() | number:2}}</td>
+		</tr>
+</table>
+<hr style="border-top: 1px solid;">
+<table style="text-transform: none;font-size: 12px;margin: 0px 20px; width: 260px;">
+		<tr>
+			<td style="text-align:left;padding:2.5px 0px">Amount paid</td>
+			<td style="text-align:center;padding:2.5px 0px">............................</td>
+			<td style="text-align:right;padding:2.5px 0px">GH₵ {{pCtrl.amountPaid}}</td>
+		</tr>
+		<tr>
+			<td style="text-align:left;padding:2.5px 0px">Change</td>
+			<td style="text-align:center;padding:2.5px 0px">............................</td>
+			<td style="text-align:right;padding:2.5px 0px">GH₵ {{pCtrl.change(pCtrl.total(),pCtrl.amountPaid) | number:2}}</td>
+		</tr>
+</table>
+</div>

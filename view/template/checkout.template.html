@@ -10,7 +10,7 @@
                  <div class="receipt-order-info">
                      <p>Date:  {{ctrl.selectedOrder.date}}</p>
                      <p>OrderType:  {{ctrl.selectedOrder.type_of_order}}</p>
-                     <p>Customer:  {{ctrl.selectedOrder.name}} - {{ctrl.selectedOrder.phone}} - {{ctrl.selectedOrder.default_location}}</p>
+                     <p>Customer:  <span ng-if="ctrl.selectedOrder.name != '- -'">{{ctrl.selectedOrder.name}}</span><span ng-if="ctrl.selectedOrder.phone != '- -'"> - {{ctrl.selectedOrder.phone}}</span><span ng-if="ctrl.selectedOrder.default_location != '- -'"> - {{ctrl.selectedOrder.default_location}}</span></p>
                  </div>
                  <table class="uk-table uk-table-divider receipt-cart-table">
     <thead>
@@ -22,19 +22,19 @@
     </thead>
     <tbody>
         <tr ng-repeat="item in ctrl.cartItems">
-            <td>{{item.name}}</td>
+            <td>{{item.name}} <span ng-repeat="modifier in item.modifier_types"> [ {{modifier.modifier_option}} ] </span</td>
             <td>{{item.qty}}</td>
-            <td>GH₵ {{item.cost | number:2}}</td>
+            <td>GH₵ {{item.cost * item.qty | number:2}}</td>
         </tr>
     </tbody>
 </table>
         <div class="order-charge-summary">
-            <div class="order-charge-summary-entry"><span class="receipt-title">Subtotal</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ {{ctrl.subtotal}}</span></div>
+   <!--          <div class="order-charge-summary-entry"><span class="receipt-title">Subtotal</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ {{ctrl.subtotal}}</span></div>
 
           <div class="order-charge-summary-entry"><span class="receipt-title">Discount</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ 0.00</span></div>
 
           <div class="order-charge-summary-entry"><span class="receipt-title">Tax</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ 0.00</span></div>
-
+ -->
             <div class="order-charge-summary-entry"><span class="receipt-title">Total</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ {{ctrl.total()}}</span></div>
 
 
@@ -76,10 +76,10 @@
         </div>
         <div style="text-align: center";>
    
-              <button class="cancel-button" ng-click="ctrl.closeModal('checkout')" onclick="printJS({ printable: 'order-receipt-block', type: 'html'})"><span  uk-icon="icon:  album; ratio: 1"></span>Print</button>
-                 <button class="save-button" ng-click="ctrl.closeOrder()"><span  uk-icon="icon: check; ratio: 1"></span> Checkout Order</button>
+              <button class="cancel-button" ng-click="ctrl.closeModal('checkout');ctrl.printReceipt('order')"><span  uk-icon="icon:  album; ratio: 1"></span>Print</button>
+                 <button class="save-button" ng-click="ctrl.closeOrder(false)"><span  uk-icon="icon: check; ratio: 1"></span> Checkout Order</button>
 
-            <button class="save-button" ng-click="ctrl.closeOrder()"  onclick=""><span  uk-icon="icon: cart; ratio: 1"></span> Checkout & Print Receipt</button>
+            <button class="save-button" ng-click="ctrl.closeOrder(true)"  onclick=""><span  uk-icon="icon: cart; ratio: 1"></span> Checkout & Print Receipt</button>
 
 
         </div>

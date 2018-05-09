@@ -36,6 +36,7 @@ app.controller ('PosController', ['$scope','$http','ModalService','NavParam','To
       this.deliveryCharge = 0.00;
       this.hidethis = true;
        this.paymentMethod ='Cash';
+       this.curProductList = [];
 
        this.newCustomer={
         name: null,
@@ -113,6 +114,7 @@ app.controller ('PosController', ['$scope','$http','ModalService','NavParam','To
             if ((response.status)=="200"){
                 thisController.products = response['data'];
                 thisController.products_output = response['data'];
+                thisController.curProductList = response['data'];
                 console.log(thisController.products);
 
             }
@@ -436,11 +438,7 @@ this.complete = function(string){
                     
                     if((response.status)=="200"){
                         if(print){
-                          document.addEventListener('deviceready', function () {
-                               var page = document.getElementById('receipt');
-                               cordova.plugins.printer.print(page, 'POS Receipt');
-
-                           }, false);
+                            thisController.printReceipt();
                         }
 
                         ModalService.Close('make-order-receipt');
@@ -467,7 +465,6 @@ this.complete = function(string){
         thisController.reset();
     };
 
-
     this.openNewCustomer = function(){
         thisController.hidethis = true; 
         ModalService.Open('newCustomer');
@@ -475,25 +472,52 @@ this.complete = function(string){
 
     this.filterByCategories = function(categoryId){
         thisController.products_output = _.where(thisController.products, {category_id: categoryId});
+        thisController.curProductList = thisController.products_output;
     };
 
     this.filterByFavorites = function(){
         thisController.products_output = _.where(thisController.products, {is_favorite:1});
+        thisController.curProductList = thisController.products_output;
     };
 
     this.showAllProducts = function(){
         thisController.products_output = thisController.products;
+        thisController.curProductList = thisController.products_output;
     };
 
 
     this.searchProducts = function(string){  
 
            var output = [];  
-           angular.forEach(thisController.products, function(product){  
-                if(product.name.toLowerCase().indexOf(string.toLowerCase()) >= 0)  
+           angular.forEach(thisController.curProductList, function(product){  
+
+                if(string.length == 1){
+
+                var product_name_firstletter_to_uppercase = product.name.charAt(0).toUpperCase();
+            
+                var product_name_without_firstletter = product.name.slice(1).toLowerCase();
+
+                var product_name = product_name_firstletter_to_uppercase + product_name_without_firstletter;
+
+                var string_firstletter_to_uppercase = string.charAt(0).toUpperCase();
+                var string_without_firstletter = string.slice(1).toLowerCase();
+
+                var string_for_search = string_firstletter_to_uppercase + string_without_firstletter;
+
+
+                // console.log(product);
+                // console.log(string_for_search);
+                // if(product.name.toLowerCase().indexOf(string.toLowerCase()) >= 0)  
+                if(product_name.indexOf(string_for_search) >= 0) 
                 {  
                      output.push(product);  
-                }  
+                } 
+                }
+                else{
+                    if(product.name.toLowerCase().indexOf(string.toLowerCase()) >= 0)  {
+                        output.push(product);
+                    }
+                } 
            });  
            thisController.products_output = output;  
       };  
@@ -559,7 +583,9 @@ this.complete = function(string){
               thisController.orderState = 'addOrder';
               thisController.amountPaid = 0.00;
               thisController.selectedCartItem ={};
-              thisController.selectedCartItemModifiers = [];  
+              thisController.selectedCartItemModifiers = []; 
+              thisController.deliveryCharge = 0.00; 
+
         };
 
     this.createNewCustomer = function(){
@@ -655,16 +681,34 @@ this.complete = function(string){
        }
     }
 
-    this.addCustomModifier = function(option){
-    if(thisController.customModifier != ''){
+
+    this.addCustomModifier = function(){
+    if(thisController.customModifierPrice == '' || thisController.customModifierPrice == null){
+       thisController.customModifierPrice =  0;
+    }
+    if(thisController.customModifier != '' && thisController.customModifierPrice > 0){
     thisController.cartItems[thisController.selectedCartItemIndex].modifier_types.push({
     modifier_id : 0,
     modifier_name : '',
-    modifier_option : option,
-    priceAlt: 0
+    modifier_option : thisController.customModifier,
+    price_alt: parseFloat(thisController.customModifierPrice)
     });
-    }
+        thisController.cartItems[thisController.selectedCartItemIndex].cost = thisController.cartItems[thisController.selectedCartItemIndex].cost + parseFloat(thisController.customModifierPrice);
     thisController.customModifier = '';
+    thisController.customModifierPrice = null;
+    }
+    else{
+        ToastService.error('No modifier name entered');
+    }
+
+    }
+
+    this.printReceipt = function(){
+        document.addEventListener('deviceready', function () {
+           var page = document.getElementById('pos_page_receipt');
+           cordova.plugins.printer.print(page, 'POS Receipt');
+
+       }, false);
     }
 
 

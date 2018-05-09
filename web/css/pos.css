@@ -753,7 +753,7 @@ body.modal-open {
 }
 
 
-#receipt{
+.receipt{
     position: fixed;
     top: 0;
     margin-top: -1000px;
@@ -823,7 +823,7 @@ font-size:13px;
 
 .receipt-title{
       display: inline-block;
-    vertical-align: bottom;
+    vertical-align: top;
     width: 55px;
       color:#383838;
 }

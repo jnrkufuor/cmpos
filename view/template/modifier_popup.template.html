@@ -5,27 +5,30 @@
         <div class="modal-header">Add Modifiers</div>
         <div class="modal-content">
           <div>
+            <div ng-if="pCtrl.cartItems[pCtrl.selectedCartItemIndex].modifier_types.length == 0" style="text-align: center; opacity:0.3"> No added modifiers</div>
             <ul class="modifier-items-popup-container" >
                      <li ng-repeat="added_modifier in pCtrl.cartItems[pCtrl.selectedCartItemIndex].modifier_types" class="modifier-item"><span>{{added_modifier.modifier_name}}</span> <span ng-if="added_modifier.modifier_name != ''"> - </span><span>{{added_modifier.modifier_option}} </span><span ng-click="pCtrl.removeModifierOption($index);" style="padding-right:10px"  uk-icon="icon: close; ratio: 1"></span></li>
               </ul>
           </div>
-          <hr ng-if="pCtrl.cartItems[pCtrl.selectedCartItemIndex].modifier_types.length > 0" style="width: 460px" />
+          <hr style="width: 460px" />
            <div class="modifier-grid-container" ng-repeat="modifier in pCtrl.selectedCartItemModifiers">
             <div class="modifier-grid">
             <div>{{modifier.modifier_name}}</div>
 
             <div>
                  <ul ng-init="options = pCtrl.parJsonArray(modifier.modifier_options)">
-                     <li ng-repeat="option in options" ng-click="pCtrl.addModifier(modifier,option, $parent.$index)"><span>{{option.option}}</span><span style="    padding-left: 10px;font-weight:bold">+GH₵ {{option.priceAlt | number:2}}</span></li>
+                     <li ng-repeat="option in options" ng-click="pCtrl.addModifier(modifier,option, $parent.$index)"><span>{{option.option}}</span><span ng-if="option.priceAlt > 0" style="    padding-left: 10px;font-weight:bold">+GH₵ {{option.priceAlt | number:2}}</span></li>
                  </ul>
             </div>
          </div>
          </div>
         </div>
-        <form class="modal-content" ng-submit="pCtrl.addCustomModifier(pCtrl.customModifier)">
+        <form class="modal-content" ng-submit="pCtrl.addCustomModifier()">
             <h1  class="modal-content-header">Add custom modifier</h1>
             <div class="uk-margin">
-                <input class="uk-input" ng-model="pCtrl.customModifier" type="text" placeholder="Enter custom modifier">
+                <input  style="display: inline-block;width:240px;font-size: 14px "class="uk-input" ng-model="pCtrl.customModifier" type="text" placeholder="Enter custom modifier">
+                <span style="padding-left: 15px;font-size: 12px">+GH₵</span>
+                <input  style="display: inline-block;width:160px;font-size: 14px"class="uk-input" ng-model="pCtrl.customModifierPrice" type="number" placeholder="Enter price change">
             </div>
 <!--             <div class="uk-margin">
                 <input class="uk-input" type="text" placeholder="Input">

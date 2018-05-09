@@ -3,7 +3,9 @@ var app = angular.module('pos-app',['ngRoute','datatables']);
 
 app.run(function($rootScope, ToastService) {
     // $rootScope.apiUrl = "http://localhost/cmpos-api/api"; 
-    $rootScope.apiUrl = "http://cmpos-api.bycavemen.com/api"; 
+    // $rootScope.apiUrl = "http://cmpos-api.bycavemen.com/api";
+    // $rootScope.apiUrl = "http://mw.pos-api.bycavemen.com/api"; 
+    $rootScope.apiUrl = "http://mw.pos-api.bycavemen.com/api";  
     $rootScope.selectedStore = {};
     $rootScope.register ={};
     $rootScope.user_info = {};

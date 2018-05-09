@@ -193,7 +193,7 @@
         return 0.00;
       };
 
-      this.closeOrder = function(){
+      this.closeOrder = function(print){
         if(thisController.amountPaid != null){
 
             if (thisController.amountPaid >= thisController.total()) {
@@ -211,9 +211,11 @@
                     if((response.status)=="200"){
 
                         thisController.closeModal('checkout');
-                        printJS({ printable: 'order-receipt-block', type: 'html'});
                         thisController.orders.splice(thisController.selectedOrderIndex,1);
-                         ToastService.success('Successfully checked out order')                  
+                        ToastService.success('Successfully checked out order');
+                        if(print){
+                            thisController.printReceipt('order');           
+                        }
                      }
                     else{
                         console.log('not successful');
@@ -233,6 +235,7 @@
         this.openModal = function(id, chargeForDisplay, order, index){
             thisController.selectedOrderIndex = index;
             thisController.selectedOrder = order;
+            thisController.amountPaid = null;
             thisController.charge = chargeForDisplay;
 
                         var req = {
@@ -284,6 +287,19 @@
 
 
         this.updateOrder = function(order){
+        console.log(order);
+
+            order.delivery_charge = 0;
+
+             if( order.name == '- -'){
+                order.name = null;
+            }
+            if( order.phone == '- -'){
+                order.phone = null;
+            }
+            if( order.default_location == '- -'){
+                order.default_location = null;
+            }
           NavParam.set(order);
           NavParam.setState('editOrder');
         };
@@ -291,6 +307,18 @@
 
         this.updateDelivery = function(delivery){
             console.log(delivery);
+
+            if( delivery.name == '- -'){
+                delivery.name = null;
+            }
+            if( delivery.phone == '- -'){
+                delivery.phone = null;
+            }
+            if( delivery.delivery_location == '- -'){
+                delivery.delivery_location = null;
+            }
+
+
             var delivery = {
                 id: delivery.sales_id,
                 name: delivery.name,
@@ -298,7 +326,7 @@
                 customer_id: delivery.customer_id,
                 default_location: delivery.delivery_location,
                 type_of_order: 'delivery',
-                delivery_charge: delivery.delivery_charge
+                delivery_charge: parseFloat(delivery.delivery_charge)
             };
 
             console.log(delivery);
@@ -440,7 +468,7 @@
         };
 
 
-        this.closeDelivery = function(orderId, index){
+        this.closeDelivery = function(orderId, index, print){
 
                 if(thisController.selectedDelivery.status == 'delivered'){
 
@@ -458,6 +486,9 @@
                     if((response.status)=="200"){
                         thisController.deliveries.splice(index,1);
                         ToastService.success('Sucessfully closed delivery');
+                        if(print){
+                            thisController.printReceipt('delivery');
+                        }
                     }
                     else{
 
@@ -529,6 +560,7 @@
         this.printDeliveryReceipt = function(delivery, index){
 
             thisController.selectedDelivery = delivery;
+            thisController.selectedDelivery.delivery_charge = parseFloat(thisController.selectedDelivery.delivery_charge);
             thisController.selectedDelivery.index = index;
    
 
@@ -606,6 +638,24 @@
         };
         
 
+        this.printReceipt = function(type){
+
+            if(type == 'delivery'){
+                        document.addEventListener('deviceready', function () {
+           var page = document.getElementById('delivery_page_receipt');
+           cordova.plugins.printer.print(page, 'POS Receipt');
+
+       }, false);
+            }
+
+        else if(type == 'order'){
+                                   document.addEventListener('deviceready', function () {
+           var page = document.getElementById('order_page_receipt');
+           cordova.plugins.printer.print(page, 'POS Receipt');
+
+       }, false);
+            } 
+        };
 
 
 

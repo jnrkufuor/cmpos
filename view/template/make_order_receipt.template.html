@@ -23,7 +23,7 @@
     </thead>
     <tbody>
         <tr ng-repeat="item in pCtrl.cartItems">
-            <td>{{item.name}}</td>
+            <td>{{item.name}} <span ng-repeat="modifier in item.modifier_types"> [ {{modifier.modifier_option}} ] </span</td>
             <td style="text-align:right">{{item.qty}}</td>
             <td>GH₵ {{item.cost * item.qty | number:2}}</td>
         </tr>
@@ -39,7 +39,7 @@
           <div ng-if="pCtrl.selectedOrderType == 'delivery'" class="order-charge-summary-entry"><span class="receipt-title">Delivery</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ {{pCtrl.deliveryCharge | number:2}}</span></div>
 
 
-      <div class="order-charge-summary-entry"><span class="receipt-title">Total</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span style="font-weight: bold" class="receipt-summary-value">GH₵ {{pCtrl.total() + pCtrl.deliveryCharge | number:2}}</span></div>
+      <div class="order-charge-summary-entry"><span class="receipt-title">Total</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span style="font-weight: bold" class="receipt-summary-value">GH₵ {{pCtrl.total() | number: 2}}</span></div>
 
       <hr  ng-if="pCtrl.selectedOrderType == 'walk in'" style="width:calc(100% - 20px); margin: 10px 0px;" />
 
@@ -53,7 +53,7 @@
              </div>
                      <div  class="modal-button-container" ng-if="pCtrl.selectedOrderType != 'walk in'">
     
-              <button class="cancel-button" ng-click="pCtrl.closeCheckOut()" onclick="printJS({ printable: 'receipt-block', type: 'html'})"><span  uk-icon="icon:  album; ratio: 1"></span>Print</button>
+              <button class="cancel-button" ng-click="pCtrl.printReceipt();pCtrl.closeCheckOut()"><span  uk-icon="icon:  album; ratio: 1"></span>Print</button>
         </div>
 
         </div>
@@ -82,8 +82,7 @@
             </select>
         </div>
         <div  class="modal-button-container">
-            <
-              <button class="cancel-button" ng-click="pCtrl.closeCheckOut()" onclick="printJS({ printable: 'receipt-container', type: 'html'})"><span  uk-icon="icon:  album; ratio: 1"></span>Print</button>
+              <button class="cancel-button" ng-click="pCtrl.printReceipt();pCtrl.closeCheckOut()"><span  uk-icon="icon:  album; ratio: 1"></span>Print</button>
               <button class="cancel-button" ng-click="pCtrl.closeOrder(pCtrl.savedOrder.id,pCtrl.amountPaid,false)" ><span  uk-icon="icon: arrow-right; ratio: 1"></span>Checkout</button>
 
             <button class="save-button" ng-click="pCtrl.closeOrder(pCtrl.savedOrder.id,pCtrl.amountPaid, true )"  onclick=""><span  uk-icon="icon: cart; ratio: 1"></span> Checkout & Print Receipt</button>

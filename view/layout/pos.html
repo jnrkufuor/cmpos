@@ -1,6 +1,6 @@
 <div ng-controller="MenuController as mCtrl" ng-init="mCtrl.curtab = 'pos'">
 <div ng-controller="PosController as pCtrl" ng-show="mCtrl.curtab  == 'pos'">
-  <div ng-include = "'view/template/receipt.html'"></div>
+
 <div class="store-name-container">{{pCtrl.selectedStore.name}}</div>
 <div class="grid-container" >
    <div class="product">
@@ -10,9 +10,12 @@
    <div ng-include = "'view/template/order_details.template.html'"></div>
    </div>
 </div>
+<div ng-include = "'view/template/pos_page_receipt.template.html'"></div>
 <div ng-include = "'view/template/make_order_receipt.template.html'"></div>
 <div ng-include = "'view/template/customer_form.template.html'"></div>
 <div ng-include = "'view/template/modifier_popup.template.html'"></div>
+<div ng-include = "'view/template/modifier_popup.template.html'"></div>
+
 
 </div>
 <div ng-include = "'view/layout/orders.html'"  ng-show="mCtrl.curtab  == 'orders'"></div>

@@ -10,8 +10,8 @@
                  <div class="receipt-order-info">
                      <p>Date:  {{ctrl.selectedDelivery.date}}</p>
                      <p>OrderType: delivery</p>
-                     <p>Customer:  {{ctrl.selectedDelivery.name}} - {{ctrl.selectedDelivery.phone}} - {{ctrl.selectedDelivery.delivery_location}}</p>
-                     <p>Rider:  {{ctrl.selectedDelivery.firstname}} {{ctrl.selectedDelivery.lastname}} </p>
+                     <p>Customer: <span ng-if="ctrl.selectedDelivery.name != '- -'">{{ctrl.selectedDelivery.name}}</span><span ng-if="ctrl.selectedDelivery.phone != '- -'"> - {{ctrl.selectedDelivery.phone}}</span><span ng-if="ctrl.selectedDelivery.delivery_location != '- -'"> - {{ctrl.selectedDelivery.delivery_location}}</span></p>
+                     <p>Rider:  <span ng-if="ctrl.selectedDelivery.firstname != '- -'">{{ctrl.selectedDelivery.firstname}}</span> <span ng-if="ctrl.selectedDelivery.lastname != '- -'">{{ctrl.selectedDelivery.lastname}}</span> </p>
                      <p>Departure time:  {{ctrl.selectedDelivery.departure_time}}</p>
                  </div>
                  <table class="uk-table uk-table-divider receipt-cart-table">
@@ -24,7 +24,7 @@
     </thead>
     <tbody>
         <tr ng-repeat="item in ctrl.cartItems">
-            <td>{{item.name}}</td>
+            <td>{{item.name}} <span ng-repeat="modifier in item.modifier_types"> [ {{modifier.modifier_option}} ] </span</td>
             <td style="text-align:right">{{item.qty}}</td>
             <td>GH₵ {{item.cost * item.qty | number:2}}</td>
         </tr>
@@ -33,11 +33,13 @@
              <div class="order-charge-summary">
             <div class="order-charge-summary-entry"><span class="receipt-title">Subtotal</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ {{ctrl.total()}}</span></div>
 
-            <div class="order-charge-summary-entry"><span class="receipt-title">Delivery charge</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ {{ctrl.selectedDelivery.amount_charge | number:2}}</span></div>
+            <div class="order-charge-summary-entry"><span class="receipt-title">Delivery charge</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ {{ctrl.selectedDelivery.delivery_charge | number:2}}</span></div>
 
-          <div class="order-charge-summary-entry"><span class="receipt-title">Discount</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ 0.00</span></div>
+<!--           <div class="order-charge-summary-entry"><span class="receipt-title">Discount</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ 0.00</span></div>
 
-          <div class="order-charge-summary-entry"><span class="receipt-title">Tax</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ 0.00</span></div>
+          <div class="order-charge-summary-entry"><span class="receipt-title">Tax</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ 0.00</span></div> -->
+
+          <div class="order-charge-summary-entry"><span class="receipt-title">Total</span><span class="receipt-dotted-line-container"><hr  class="receipt-dotted-line" style="border-top: dotted 1px;" /></span><span class="receipt-summary-value">GH₵ {{ctrl.total() +  ctrl.selectedDelivery.delivery_charge | number:2}}</span></div>
 
            <hr style="width:calc(100% - 20px); margin: 10px 0px;" />
 
@@ -53,11 +55,11 @@
 
         </div>
          <div  class="modal-button-container" >
-              <button class="cancel-button" ng-click="ctrl.closeDeliveryReceipt()" onclick="printJS({ printable: 'receipt', type: 'html'})"><span  uk-icon="icon:  album; ratio: 1"></span>Print</button>
+              <button class="cancel-button" ng-click="ctrl.closeDeliveryReceipt();ctrl.printReceipt('delivery')"><span  uk-icon="icon:  album; ratio: 1"></span>Print</button>
 
-              <button class="cancel-button" ng-click="ctrl.closeDelivery(ctrl.selectedDelivery.id,ctrl.selectedDelivery.index);ctrl.closeDeliveryReceipt()" ><span  uk-icon="icon:  album; ratio: 1"></span>Checkout</button>
+              <button class="cancel-button" ng-click="ctrl.closeDelivery(ctrl.selectedDelivery.id,ctrl.selectedDelivery.index, false);ctrl.closeDeliveryReceipt()" ><span  uk-icon="icon:  album; ratio: 1"></span>Checkout</button>
 
-              <button class="cancel-button" ng-click="ctrl.closeDelivery(ctrl.selectedDelivery.id, ctrl.selectedDelivery.index);ctrl.closeDeliveryReceipt()" onclick="printJS({ printable: 'delivery-receipt-block', type: 'html'})"><span  uk-icon="icon:  album; ratio: 1"></span>Print & Checkout</button>
+              <button class="cancel-button" ng-click="ctrl.closeDelivery(ctrl.selectedDelivery.id, ctrl.selectedDelivery.index, true);ctrl.closeDeliveryReceipt()"><span  uk-icon="icon:  album; ratio: 1"></span>Print & Checkout</button>
         </div>
 
     </div>

@@ -1,4 +1,4 @@
-<div ng-include = "'view/template/receipt.html'"></div>
+
 <div ng-controller="OrdersController as ctrl" ng-init="ctrl.currentTab = 2 ">
 <div class="order-page-head-container">
 <div class="order-page-section-head">
@@ -7,14 +7,10 @@
 
 
 <div class="summary-block">
-	<div class="summary-widget">
+<!-- 	<div class="summary-widget">
    <h1 class="summary-value">21</h1>
    <p class="summary-value-title">Customers</p>
-  </div>
-    <div class="summary-widget">
-   <h1 class="summary-value">21</h1>
-   <p class="summary-value-title">Customers</p>
-  </div>
+  </div> -->
 </div>
 
 
@@ -51,7 +47,7 @@
       
         	<td>{{order.id}}</td>
         	<td>{{order.name}}</td>
-        <td>{{order.phone}}</td>
+        <td>{{order.contact_number}}</td>
         <td><a style="text-decoration: none; color: #666">{{order.type_of_order}} <span class="uk-margin-small-left" uk-icon="icon: triangle-down"></span></a>
         <div class="order-type-dropdown" uk-dropdown="mode: click">
                  <ul class="uk-nav uk-dropdown-nav">
@@ -64,7 +60,7 @@
        <td>{{order.total_amount | number:2}}</td>
           <td>{{order.date}}</td>
             
-              <td> <button class="edit-order-btn" ng-click="ctrl.openModal('checkout',order.total_amount,order, $index)"><span>Checkout</span></button></td>
+              <td> <button class="edit-order-btn" ng-click="ctrl.openModal('checkout',order.total_amount,order, $index);"><span>Checkout</span></button></td>
             <td><button ng-click="ctrl.updateOrder(order);mCtrl.initializeOrderDetails();mCtrl.switchTab('pos','orders')" class="edit-order-btn"><span uk-icon="icon: pencil; ratio: 0.9"></span><span> edit order</span></button></td>
             <td> <button ng-click="ctrl.cancelOrderConfrim(order.id, $index)" class="delete-container">
               <img src="web/img/error.svg" style="display: inline-block;height:20px"><span style="font-size: 13px"> Cancel</span></button>
@@ -102,10 +98,10 @@
           <td>{{delivery.order_id}}</td>
           <td>{{delivery.name}}</td>
            <td>{{delivery.delivery_location}}</td>
-          <td>{{delivery.phone}}</td>
+          <td>{{delivery.contact_number}}</td>
           
-           <td><a ng-if="delivery.firstname == ''" style="text-decoration: none; color: #BF6359">Unassigned <span class="uk-margin-small-left" uk-icon="icon: triangle-down"></span></a>
-            <a ng-if="delivery.firstname != ''" style="text-decoration: none; color: #666">{{delivery.firstname}} <span ng-if="delivery.lastname != '- -'">{{delivery.lastname}}</span> <span class="uk-margin-small-left" uk-icon="icon: triangle-down"></span></a>
+           <td><a ng-if="delivery.firstname == '- -'" style="text-decoration: none; color: #BF6359">Unassigned <span class="uk-margin-small-left" uk-icon="icon: triangle-down"></span></a>
+            <a ng-if="delivery.firstname != '- -'" style="text-decoration: none; color: #666">{{delivery.firstname}} <span ng-if="delivery.lastname != '- -'">{{delivery.lastname}}</span> <span class="uk-margin-small-left" uk-icon="icon: triangle-down"></span></a>
 
         <div class="order-type-dropdown" uk-dropdown="mode: click">
                  <ul class="uk-nav uk-dropdown-nav scrollable-dropdown">
@@ -158,9 +154,9 @@
           <td>{{cancelled.name}}</td>
           <td>{{cancelled.type_of_order}}</td>
             <td>{{cancelled.total_amount}}</td>
-            <td>{{cancelled.phone}}</td>
+            <td>{{cancelled.contact_number}}</td>
             <td>
-              <button class="cancel-button" style="color: black"><img src="web/img/undo.svg" ng-click="ctrl.restoreClosedOrder(cancelled.id, $index)" style="display: inline-block;height:20px"><span style="font-size: 13px"> restore</span></button>
+              <button  ng-click="ctrl.restoreClosedOrder(cancelled.id, $index)" class="cancel-button" style="color: black"><img src="web/img/undo.svg" style="display: inline-block;height:20px"><span style="font-size: 13px"> restore</span></button>
             </td>
         </tr>
     </tbody>
@@ -198,6 +194,8 @@
 </div>
 </div>
 
+<div ng-include = "'view/template/orders_tab_receipt.template.html'"></div>
+<div ng-include = "'view/template/deliveries_tab_receipt.template.html'"></div>
 <div ng-include = "'view/template/cancel_delivery.template.html'"></div>
 <div ng-include = "'view/template/checkout.template.html'"></div>
 <div ng-include = "'view/template/cancel_order.template.html'"></div>
